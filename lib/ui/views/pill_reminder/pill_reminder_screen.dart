@@ -114,7 +114,37 @@ class PillReminderScreen extends StatelessWidget {
               ]))),
 
 
-              SliverList(delegate: SliverChildBuilderDelegate(
+          model.notificationList.isEmpty ? SliverFillRemaining(
+            child: Center(
+              child: Column(
+                children: [
+
+                  SizedBox(
+                    height: 20,
+                  ),
+                  
+
+                  Container(
+                    height: 100,
+                      width: 100,
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                        image: AssetImage(Constant.emptyPill),
+                      )
+                    ),
+                  )
+
+                  ,
+                  SizedBox(
+                    height: 20,
+                  ),
+
+                  Text("Add pills to reminder to fill this space")
+
+                ],
+              ),
+            ),
+          )  :    SliverList(delegate: SliverChildBuilderDelegate(
 
                       (c, i){
 

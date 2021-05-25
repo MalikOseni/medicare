@@ -23,8 +23,20 @@ class PillReminderScreenController extends GetxController {
   @override
   void onInit() {
     fetchNotification();
-
+    updateBoolValue(true);
     super.onInit();
+  }
+
+  void updateBoolValue(bool value){
+
+    try{
+     var controller =  Get.find<HomeScreenController>();
+     controller.changeFloating(value: value);
+
+    } catch(e){
+      print(e);
+    }
+
   }
 
   void closeDrawer(HomeMenu menu) {
@@ -37,7 +49,7 @@ class PillReminderScreenController extends GetxController {
 
   void fetchNotification() {
     _subscription = _notificationService.listenForStudentData().listen((event) {
-      notificationList = event ?? [];
+      notificationList = [];// event ?? [];
       update();
     });
   }
@@ -49,6 +61,7 @@ class PillReminderScreenController extends GetxController {
   @override
   void onClose() {
     _subscription?.cancel();
+    updateBoolValue(false);
     super.onClose();
   }
 

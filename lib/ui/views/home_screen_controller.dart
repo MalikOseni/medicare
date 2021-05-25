@@ -34,6 +34,7 @@ class HomeScreenController extends GetxController {
 
     await Future.delayed(Duration(milliseconds: 500));
 
+
     if (option == HomeMenu.signOut) {
       try {
         await _authService.signOut();
@@ -45,6 +46,7 @@ class HomeScreenController extends GetxController {
     }
 
     selectedItem = option;
+
     update();
   }
 
@@ -102,37 +104,16 @@ class HomeScreenController extends GetxController {
     return title;
   }
 
+  void changeFloating({bool value}){
+
+     showFloating = value;
+     update();
+
+  }
+
   void addPillReminder()  {}
 
-   showFloatingFF() async {
-    if (selectedItem != HomeMenu.pill_reminder){
 
-      print("We are not in pill reminder");
-
-      showFloating = false;
-    }
-
-    try {
-
-      await Future.delayed(Duration(milliseconds: 250));
-
-      var controller = Get.find<PillReminderScreenController>();
-
-      var value = controller.addDrugInterface;
-
-
-      showFloating = !value;
-
-      print("We are here");
-
-    } catch (e) {
-      print("Error occurred $e");
-      showFloating = false;
-    }
-
-
-    update();
-  }
 }
 
 enum DeggiaPopMenu {
