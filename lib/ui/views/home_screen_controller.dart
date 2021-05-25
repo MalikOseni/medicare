@@ -5,6 +5,7 @@ import 'package:medicare/Services/auth_service/auth_service.dart';
 import 'package:medicare/Services/student_data_service/student_data_service.dart';
 import 'package:medicare/datamodel/student_data.dart';
 import 'package:medicare/ui/route/route_names.dart';
+import 'package:medicare/ui/views/pill_reminder/pill_reminder_controller.dart';
 import 'package:medicare/utils/locator.dart';
 
 import 'authentication/default_auth/default_auth_screen.dart';
@@ -23,6 +24,7 @@ class HomeScreenController extends GetxController {
 
   bool enableNotifications = true;
 
+ bool showFloating  = false;
   StreamSubscription<StudentData> _studentDataStreamSub;
   StudentData studentData =
       StudentData(name: "Null", email: "Null", matric: "Null");
@@ -98,6 +100,38 @@ class HomeScreenController extends GetxController {
     }
 
     return title;
+  }
+
+  void addPillReminder()  {}
+
+   showFloatingFF() async {
+    if (selectedItem != HomeMenu.pill_reminder){
+
+      print("We are not in pill reminder");
+
+      showFloating = false;
+    }
+
+    try {
+
+      await Future.delayed(Duration(milliseconds: 250));
+
+      var controller = Get.find<PillReminderScreenController>();
+
+      var value = controller.addDrugInterface;
+
+
+      showFloating = !value;
+
+      print("We are here");
+
+    } catch (e) {
+      print("Error occurred $e");
+      showFloating = false;
+    }
+
+
+    update();
   }
 }
 

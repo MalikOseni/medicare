@@ -5,13 +5,13 @@ import 'package:get/get.dart';
 import 'package:medicare/ui/views/home_screen_controller.dart';
 import 'package:medicare/utils/constant_string.dart';
 
-import 'notification_controller.dart';
+import 'app_history_controller.dart';
 
-class NotificationScreen extends StatelessWidget {
+class AppointmentHistoryScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<NotificationController>(
-        init: NotificationController(),
+    return GetBuilder<AppointmentHistoryController>(
+        init: AppointmentHistoryController(),
         builder: (model){
           return CustomScrollView(
             physics: BouncingScrollPhysics(),
@@ -56,7 +56,7 @@ class NotificationScreen extends StatelessWidget {
                                           shape: BoxShape.circle,
                                           image: DecorationImage(
                                               image:
-                                              AssetImage(Constant.alarmClock))
+                                              AssetImage(Constant.timeIcon))
                                       ),
                                     ),
                                   ),
@@ -66,7 +66,7 @@ class NotificationScreen extends StatelessWidget {
                                   height: 20,
                                 ),
                                 Text(
-                                  "Notifications,",
+                                  "Appointment History,",
                                   style: TextStyle(
                                       fontSize: 25,
                                       fontWeight: FontWeight.bold,
@@ -74,7 +74,7 @@ class NotificationScreen extends StatelessWidget {
                                 ),
 
                                 Text(
-                                  "View Notifications",
+                                  "View Past Appointment",
                                   style: TextStyle(
                                       fontSize: 14,
                                       fontWeight: FontWeight.bold,

@@ -2,19 +2,23 @@ import 'dart:async';
 
 import 'package:get/get.dart';
 import 'package:jiffy/jiffy.dart';
+import 'package:medicare/Services/appointment_service/appointment_service.dart';
 import 'package:medicare/Services/notification_service/notification_service.dart';
+import 'package:medicare/datamodel/appointment_history.dart';
 import 'package:medicare/datamodel/notification_data.dart';
 import 'package:medicare/utils/constant_string.dart';
 import 'package:medicare/utils/locator.dart';
 
 import '../home_screen_controller.dart';
 
-class NotificationController extends GetxController {
-  NotificationService _notificationService = locator<NotificationService>();
+class PillReminderScreenController extends GetxController {
+  AppointmentService _notificationService = locator<AppointmentService>();
 
-  List<NotificationData> notificationList = [];
+  List<AppointmentHistory> notificationList = [];
 
-  StreamSubscription<List<NotificationData>> _subscription;
+  StreamSubscription<List<AppointmentHistory>> _subscription;
+
+  bool addDrugInterface =  false;
 
   @override
   void onInit() {
@@ -39,9 +43,7 @@ class NotificationController extends GetxController {
   }
 
   String getImage(int i) {
-    return notificationList[i].type == 0
-        ? Constant.pillsImage
-        : Constant.timeIcon;
+    return Constant.timeIcon;
   }
 
   @override
@@ -61,14 +63,22 @@ class NotificationController extends GetxController {
       "hour": date.hour
     }).jm;
 
-    return notificationList[i].type == 0
-        ? time
-        : "$time " +
+    return  "$time " +
             " ${Jiffy({
               "year": date.year,
               "month": date.month,
               "day": date.day,
               "hour": date.hour
             }).yMMMMd}";
+  }
+
+  String getTitle() {
+
+   return addDrugInterface ? "Add Drug" : "Drug list";
+
+  }
+
+  void deleteReminder(int i) {
+
   }
 }

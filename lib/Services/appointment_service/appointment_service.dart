@@ -1,43 +1,43 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:medicare/Services/auth_service/auth_service.dart';
+import 'package:medicare/datamodel/appointment_history.dart';
 import 'package:medicare/datamodel/notification_data.dart';
 import 'package:medicare/datamodel/student_data.dart';
 import 'package:medicare/utils/locator.dart';
 
-abstract class NotificationService {
-  Stream<List<NotificationData>> listenForStudentData();
+abstract class AppointmentService {
+  Stream<List<AppointmentHistory>> listenForStudentData();
 }
 
-class NotificationServiceFake extends NotificationService {
+class AppointmentServiceFake extends AppointmentService {
   @override
-  Stream<List<NotificationData>> listenForStudentData() async* {
+  Stream<List<AppointmentHistory>> listenForStudentData() async* {
     yield [
-      NotificationData(
-          type: 0,
-          title: "Take Peciline",
+      AppointmentHistory(
+
+          title: "Appointment Approved",
           time: DateTime.now().millisecondsSinceEpoch),
 
 
-      NotificationData(
-          type: 0,
-          title: "Take Paracetamol",
+      AppointmentHistory(
+          title: "Appointment Approved",
           time: DateTime.now().millisecondsSinceEpoch),
 
 
-      NotificationData(
-          type: 1,
+      AppointmentHistory(
+
           title: "Appointment Approved",
           time: DateTime.now().millisecondsSinceEpoch),
     ];
   }
 }
 
-class NotificationServiceReal extends NotificationService {
+class AppointmentServiceReal extends AppointmentService {
   FirebaseFirestore firestore = FirebaseFirestore.instance;
   AuthService _authService = locator<AuthService>();
 
   @override
-  Stream<List<NotificationData>> listenForStudentData() async* {
+  Stream<List<AppointmentHistory>> listenForStudentData() async* {
     _authService.currentUserId();
 
     yield* firestore
@@ -48,13 +48,13 @@ class NotificationServiceReal extends NotificationService {
         .map((event) => mapData(event.docs));
   }
 
-  List<NotificationData> mapData(List<DocumentSnapshot> data) {
+  List<AppointmentHistory> mapData(List<DocumentSnapshot> data) {
     if (data == null) return [];
 
-    List<NotificationData> dataList = [];
+    List<AppointmentHistory> dataList = [];
 
     data.forEach((element) {
-      dataList.add(NotificationData.fromMap(element.data()));
+      dataList.add(AppointmentHistory.fromMap(element.data()));
     });
 
     return dataList;

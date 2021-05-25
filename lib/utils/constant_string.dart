@@ -64,6 +64,8 @@ class Constant {
 
   static const String pillsImage = "assets/images/pills_image.png";
 
+  static const String timeIcon = "assets/images/time_icon.png";
+
   static const String alarmClock = "assets/images/alarm_clock.png";
 
   static const String lightIcon = "assets/images/light_icon.png";

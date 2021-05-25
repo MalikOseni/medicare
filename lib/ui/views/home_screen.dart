@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:medicare/ui/views/appointment/app_history_screen.dart';
 import 'package:medicare/utils/constant_string.dart';
 import 'package:medicare/utils/locator.dart';
 
@@ -9,6 +10,7 @@ import 'appointment/appointment_screen.dart';
 import 'dashboard/dashboard_screen.dart';
 import 'home_screen_controller.dart';
 import 'notification/notification_screen.dart';
+import 'pill_reminder/pill_reminder_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   @override
@@ -19,6 +21,15 @@ class HomeScreen extends StatelessWidget {
       init: HomeScreenController(),
       builder: (model) {
         return Scaffold(
+          floatingActionButton: model.showFloating
+              ? FloatingActionButton(
+                  backgroundColor: Color(0xffFE6358),
+                  child: Icon(
+                    Icons.add,
+                    color: Colors.white,
+                  ),
+                  onPressed: model.addPillReminder)
+              : null,
           appBar: AppBar(
             centerTitle: true,
             flexibleSpace: SafeArea(
@@ -76,6 +87,11 @@ class HomeScreen extends StatelessWidget {
       case HomeMenu.notifications:
         return NotificationScreen();
 
+      case HomeMenu.appointment_history:
+        return AppointmentHistoryScreen();
+
+      case HomeMenu.pill_reminder:
+        return PillReminderScreen();
     }
 
     return Container(); // UnverifiedScreen();
@@ -83,7 +99,7 @@ class HomeScreen extends StatelessWidget {
 
   Widget _menu({BuildContext context, HomeScreenController model}) {
     String name = model.studentData.name;
-    String matric =  model.studentData.matric;
+    String matric = model.studentData.matric;
     String email = model.studentData.email;
 
     return Padding(
@@ -116,14 +132,12 @@ class HomeScreen extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-
                             SizedBox(
                               width: 20,
                             ),
-
                             Container(
-                              height : 60,
-                              width : 60,
+                              height: 60,
+                              width: 60,
                               decoration: BoxDecoration(
                                   shape: BoxShape.circle,
                                   image: DecorationImage(
@@ -140,12 +154,14 @@ class HomeScreen extends StatelessWidget {
                                 Text(
                                   name,
                                   style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 16),
+                                      color: Colors.white, fontSize: 16),
                                 ),
-                                Text(matric, style: TextStyle(
-                                  color: Colors.white,
-                                ),)
+                                Text(
+                                  matric,
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                  ),
+                                )
                               ],
                             )
                           ],

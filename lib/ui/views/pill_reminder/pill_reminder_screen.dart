@@ -5,13 +5,13 @@ import 'package:get/get.dart';
 import 'package:medicare/ui/views/home_screen_controller.dart';
 import 'package:medicare/utils/constant_string.dart';
 
-import 'notification_controller.dart';
+import 'pill_reminder_controller.dart';
 
-class NotificationScreen extends StatelessWidget {
+class PillReminderScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<NotificationController>(
-        init: NotificationController(),
+    return GetBuilder<PillReminderScreenController>(
+        init: PillReminderScreenController(),
         builder: (model){
           return CustomScrollView(
             physics: BouncingScrollPhysics(),
@@ -55,8 +55,9 @@ class NotificationScreen extends StatelessWidget {
 
                                           shape: BoxShape.circle,
                                           image: DecorationImage(
+                                            fit: BoxFit.contain,
                                               image:
-                                              AssetImage(Constant.alarmClock))
+                                              AssetImage(Constant.pillsImage))
                                       ),
                                     ),
                                   ),
@@ -66,7 +67,7 @@ class NotificationScreen extends StatelessWidget {
                                   height: 20,
                                 ),
                                 Text(
-                                  "Notifications,",
+                                  "Pill Reminder",
                                   style: TextStyle(
                                       fontSize: 25,
                                       fontWeight: FontWeight.bold,
@@ -74,7 +75,7 @@ class NotificationScreen extends StatelessWidget {
                                 ),
 
                                 Text(
-                                  "View Notifications",
+                                  "Get drug notification",
                                   style: TextStyle(
                                       fontSize: 14,
                                       fontWeight: FontWeight.bold,
@@ -93,7 +94,7 @@ class NotificationScreen extends StatelessWidget {
                     Center(
                       child: Text(
 
-                        "Notifications".toUpperCase(),
+                        model.getTitle().toUpperCase(),
                         style: TextStyle(
                             decoration: TextDecoration.underline,
                             shadows: [Shadow(offset: Offset(0, -5))],
@@ -148,7 +149,7 @@ class NotificationScreen extends StatelessWidget {
                                     padding: EdgeInsets.all(15),
                                     child: Container(
                                       decoration: BoxDecoration(
-                                        image: DecorationImage(image: AssetImage(model.getImage(i)))
+                                        image: DecorationImage(image: AssetImage(Constant.pillsImage))
                                       ),
                                     ),
                                   ),
@@ -162,9 +163,9 @@ class NotificationScreen extends StatelessWidget {
                                 ),),
 
 
-                                trailing: Container(
-                                    width: 100,
-                                    child: Text(model.getTimeNotif(i), maxLines: 3,)),
+                                trailing: IconButton(icon: Icon(Icons.delete, color:  Colors.red,), onPressed: (){
+                                  model.deleteReminder(i);
+                                })
 
 
                               ),

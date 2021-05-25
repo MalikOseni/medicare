@@ -117,7 +117,10 @@ class DashboardScreen extends StatelessWidget {
 
                          elevation: 5,
                          child: InkWell(
-                           onTap: (){},
+                           onTap: (){
+
+                             model.closeDrawer(HomeMenu.pill_reminder);
+                           },
                            child: Container(
                              width: Get.width,
                              height: Get.height / 4.5,
