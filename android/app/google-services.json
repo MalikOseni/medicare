@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "150077380242",
+    "project_id": "medicare-614ad",
+    "storage_bucket": "medicare-614ad.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:150077380242:android:0e416bb240e8275d2bf84b",
+        "android_client_info": {
+          "package_name": "com.malik.medicare"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "150077380242-0v2laoe6c205lpnmgnikjjm5pefutc53.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDK_F0BQxA7w6ekwtZr20U3UYKojl5CRmE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "150077380242-0v2laoe6c205lpnmgnikjjm5pefutc53.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,4 +1,3 @@
-
 import 'dart:async';
 
 import 'package:awesome_dialog/awesome_dialog.dart';
@@ -26,7 +25,6 @@ class LoginController extends GetxController {
   FocusNode emailFocus = FocusNode();
   FocusNode passwordFocus = FocusNode();
 
-
   bool isConnected = true;
 
   StreamSubscription<ConnectivityResult> _streamSubscription;
@@ -42,25 +40,22 @@ class LoginController extends GetxController {
   @override
   void onClose() {
     _streamSubscription?.cancel();
-     super.onClose();
+    super.onClose();
   }
 
-
-  Future<bool> checkConnection () async{
+  Future<bool> checkConnection() async {
     var result = await Connectivity().checkConnectivity();
     return result != ConnectivityResult.none;
   }
 
-  void listenConnection() async{
+  void listenConnection() async {
     isConnected = await checkConnection();
-    _streamSubscription =  Connectivity().onConnectivityChanged.listen((event) {
+    _streamSubscription = Connectivity().onConnectivityChanged.listen((event) {
       isConnected = event != ConnectivityResult.none;
     });
   }
 
   void loginClicked() async {
-
-
     String email = emailController.text.trim();
     String password = passwordController.text.trim();
 
@@ -74,11 +69,10 @@ class LoginController extends GetxController {
       return;
     }
 
-    if(!isConnected){
+    if (!isConnected) {
       showInfoSnackBar(message: "No network connection");
       return;
     }
-
 
     emailFocus.unfocus();
     passwordFocus.unfocus();
@@ -87,27 +81,33 @@ class LoginController extends GetxController {
 
     var data = await _authService.login(email: email, password: password);
 
-
-
     if (data != AuthResultStatus.successful) {
       Get.back();
-
 
       _showSnackBar(message: data);
 
       return;
     }
 
+    emailController.clear();
+    passwordController.clear();
+
+    if (!_authService.isEmailVerified()) {
+
+    await  _authService.sendEmailVerification();
+      Get.off(
+          CheckEmailScreen(
+            email: email,
+          ),
+          fullscreenDialog: true,
+          transition: Transition.rightToLeft);
+      return;
+    }
+
     Get.offAllNamed(RouteName.homeScreen);
-
-
-
   }
 
   void goToForgotPassword() {
-
-
-
     Get.off(ForgotPasswordScreen(), fullscreenDialog: true);
   }
 
@@ -115,14 +115,13 @@ class LoginController extends GetxController {
     Get.off(RegisterScreen(), fullscreenDialog: true);
   }
 
-
-
-
   _showSnackBar({String message}) {
     if (!Get.isSnackbarOpen) {
-      Get.rawSnackbar(messageText: Text(message, style: TextStyle(
-        color: Colors.white
-      ),));
+      Get.rawSnackbar(
+          messageText: Text(
+        message,
+        style: TextStyle(color: Colors.white),
+      ));
     }
   }
 
@@ -130,5 +129,4 @@ class LoginController extends GetxController {
     hidePassword = !hidePassword;
     update();
   }
-
 }

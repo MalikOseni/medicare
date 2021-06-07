@@ -7,6 +7,8 @@ import 'package:medicare/Services/appointment_service/appointment_service.dart';
 import 'package:medicare/Services/auth_service/auth_service.dart';
 import 'package:medicare/Services/cloud_function/cloud_function_service.dart';
 import 'package:medicare/Services/notification_service/notification_service.dart';
+import 'package:medicare/Services/pill_service/pill_service.dart';
+
 import 'package:medicare/Services/student_data_service/student_data_service.dart';
 
 var locator = GetIt.instance;
@@ -14,14 +16,15 @@ var locator = GetIt.instance;
 
 
 void setupServices() {
-  locator.registerLazySingleton<AuthService>(() => AuthServiceFake());
-  locator.registerFactory<CloudFunctionService>(() => CloudFunctionServiceFake());
+  locator.registerLazySingleton<AuthService>(() => AuthServiceReal());
+  locator.registerFactory<CloudFunctionService>(() => CloudFunctionServiceReal());
   locator.registerFactory<NotificationService>(() => NotificationServiceFake());
 
 
-  locator.registerFactory<StudentDataService>(() => StudentDataServiceFake());
+  locator.registerFactory<StudentDataService>(() => StudentDataServiceReal());
 
   locator.registerFactory<AppointmentService>(() => AppointmentServiceFake());
+  locator.registerFactory<PillDataService>(() => PillDataServiceReal());
 
 }
 

@@ -6,12 +6,15 @@ import 'package:medicare/datamodel/student_data.dart';
 import 'package:medicare/utils/locator.dart';
 
 abstract class AppointmentService {
-  Stream<List<AppointmentHistory>> listenForStudentData();
+  Stream<List<AppointmentHistory>> listenForAppointment();
+
+  Future<void> bookAppointment({AppointmentHistory appointment });
+
 }
 
 class AppointmentServiceFake extends AppointmentService {
   @override
-  Stream<List<AppointmentHistory>> listenForStudentData() async* {
+  Stream<List<AppointmentHistory>> listenForAppointment() async* {
     yield [
       AppointmentHistory(
 
@@ -30,6 +33,15 @@ class AppointmentServiceFake extends AppointmentService {
           time: DateTime.now().millisecondsSinceEpoch),
     ];
   }
+
+  @override
+  Future<void> bookAppointment({AppointmentHistory appointment}) async {
+
+
+    await Future.delayed(Duration(milliseconds: 250));
+
+
+  }
 }
 
 class AppointmentServiceReal extends AppointmentService {
@@ -37,7 +49,7 @@ class AppointmentServiceReal extends AppointmentService {
   AuthService _authService = locator<AuthService>();
 
   @override
-  Stream<List<AppointmentHistory>> listenForStudentData() async* {
+  Stream<List<AppointmentHistory>> listenForAppointment() async* {
     _authService.currentUserId();
 
     yield* firestore
@@ -58,5 +70,15 @@ class AppointmentServiceReal extends AppointmentService {
     });
 
     return dataList;
+  }
+
+
+  @override
+  Future<void> bookAppointment({  AppointmentHistory appointment}) async {
+
+    await firestore.collection("users").doc(_authService.currentUserId())
+        .set(appointment.toMap());
+
+    return 1;
   }
 }

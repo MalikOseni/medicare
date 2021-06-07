@@ -23,20 +23,20 @@ class SplashScreenController extends GetxController {
     SharedPreferences preferences = await SharedPreferences.getInstance();
 
 
-    bool isFirstTime = true; // preferences.getBool(Constant.firstTimeUser) ?? true;
+    bool isFirstTime =  preferences.getBool(Constant.firstTimeUser) ?? true;
 
 
-    await preferences.setBool(Constant.firstTimeUser, false);
     if (isFirstTime) {
 
 
+      await preferences.setBool(Constant.firstTimeUser, !isFirstTime);
 
        Get.offAndToNamed(RouteName.on_boarding);
     } else {
       if(_authService.isLoggedIn()){
         Get.offAndToNamed(RouteName.homeScreen);
       } else {
-        Get.offAndToNamed(RouteName.on_boarding);
+        Get.offAndToNamed(RouteName.login);
       }
     }
 

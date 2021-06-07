@@ -46,7 +46,7 @@ class DashboardScreen extends StatelessWidget {
                            color: Colors.white),
                      ),
                      Text(
-                       "Malik,",
+                       model.getStudentName().capitalizeFirst,
                        style: TextStyle(
                            fontSize: 20,
                            fontWeight: FontWeight.bold,

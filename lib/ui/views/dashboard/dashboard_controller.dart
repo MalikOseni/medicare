@@ -10,4 +10,24 @@ class DashboardController extends GetxController {
       controller.closeDrawer(menu);
     } catch (e) {}
   }
+
+
+  String getStudentName(){
+
+
+    try{
+     var data = Get.find<HomeScreenController>().studentData;
+
+     if(data == null ){
+       return "Null";
+     }
+
+     return data.name;
+    } catch(e){
+
+      return "Null";
+    }
+
+  }
+
 }

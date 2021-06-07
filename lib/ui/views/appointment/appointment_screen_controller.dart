@@ -1,6 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:medicare/Services/appointment_service/appointment_service.dart';
+import 'package:medicare/datamodel/appointment_history.dart';
 import 'package:medicare/ui/shared/info_snackbar.dart';
+import 'package:medicare/utils/locator.dart';
 
 import '../home_screen_controller.dart';
 
@@ -8,6 +11,8 @@ class AppointmentScreenController extends GetxController {
   TextEditingController complaintController = TextEditingController();
 
   FocusNode complainFocus = FocusNode();
+
+  AppointmentService _appointmentService = locator<AppointmentService>();
 
   bool showAppointTime = false;
 
@@ -39,7 +44,15 @@ class AppointmentScreenController extends GetxController {
 
       submittedAppointment =  true;
 
+
+
+
+
       update();
+
+
+      _appointmentService.bookAppointment();
+
 
       return;
     }

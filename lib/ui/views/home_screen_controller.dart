@@ -24,7 +24,7 @@ class HomeScreenController extends GetxController {
 
   bool enableNotifications = true;
 
- bool showFloating  = false;
+  bool showFloating = false;
   StreamSubscription<StudentData> _studentDataStreamSub;
   StudentData studentData =
       StudentData(name: "Null", email: "Null", matric: "Null");
@@ -34,13 +34,12 @@ class HomeScreenController extends GetxController {
 
     await Future.delayed(Duration(milliseconds: 500));
 
-
     if (option == HomeMenu.signOut) {
       try {
         await _authService.signOut();
       } catch (e) {}
 
-      Get.offNamedUntil(RouteName.default_auth, (route) => false);
+      Get.offNamedUntil(RouteName.login, (route) => false);
 
       return;
     }
@@ -104,16 +103,20 @@ class HomeScreenController extends GetxController {
     return title;
   }
 
-  void changeFloating({bool value}){
-
-     showFloating = value;
-     update();
-
+  void changeFloating({bool value}) {
+    showFloating = value;
+    update();
   }
 
-  void addPillReminder()  {}
+  void addPillReminder() {
+    try {
+      var controller = Get.find<PillReminderScreenController>();
 
-
+      controller.addDrugClicked();
+    } catch (e) {
+      print(e);
+    }
+  }
 }
 
 enum DeggiaPopMenu {

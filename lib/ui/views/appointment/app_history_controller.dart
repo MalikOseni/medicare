@@ -34,7 +34,7 @@ class AppointmentHistoryController extends GetxController {
   }
 
   void fetchNotification() {
-    _subscription = _notificationService.listenForStudentData().listen((event) {
+    _subscription = _notificationService.listenForAppointment().listen((event) {
       notificationList = event ?? [];
       update();
     });

@@ -140,7 +140,7 @@ class RegisterController extends GetxController {
   }
 
   void registerClicked() async {
-   // if (!formatData()) return;
+    if (!formatData()) return;
 
     emailFocus.unfocus();
     passwordFocus.unfocus();
@@ -154,7 +154,7 @@ class RegisterController extends GetxController {
     loadDialog(title: "Please Hold", dismiss: true);
 
 
-  var result = await _cloudFunctionService.callFunction(name: "createAccount", data: data);
+  var result = await _cloudFunctionService.callFunction(name: "createUserAccount", data: data);
 
 
 
@@ -164,11 +164,25 @@ class RegisterController extends GetxController {
 
 
 
+    if(result == -2){
+
+      showInfoSnackBar(message: "User with matric number already exist");
+      return;
+    }
+
+    if(result == -3){
+
+      showInfoSnackBar(message: "User with email already exist");
+      return;
+    }
+
+
     if(result != 1){
 
       showInfoSnackBar(message: "User registration failed");
       return;
     }
+
 
 
     Get.to(CheckEmailScreen(email: emailController.text.trim(),),

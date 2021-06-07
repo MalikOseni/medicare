@@ -93,6 +93,7 @@ class LoginScreen extends StatelessWidget {
                             height: 20.h,
                           ),
                           TextField(
+                            focusNode: model.passwordFocus,
                             obscureText: model.hidePassword,
                             onEditingComplete: () {
                               model.passwordFocus.unfocus();
@@ -156,7 +157,7 @@ class LoginScreen extends StatelessWidget {
                         height: 21.h,
                       ),
                       TextButton(
-                          onPressed: (){},
+                          onPressed: model.goToForgotPassword,
                           child: Text(
                             "Forgot Password",
                             style: TextStyle(color: Color(0xff6EEB67)),

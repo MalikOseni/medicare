@@ -101,13 +101,17 @@ class ForgotPasswordController extends GetxController {
         "We have sent you password reset instructions (also check the Spam folder).";
     Get.off(
         CheckEmailScreen(
-
+          email: email,
+          message: _message
         ),
         fullscreenDialog: true);
   }
 
   void goToSignUp() {
-    Get.off(RegisterScreen(), fullscreenDialog: true);
+    Get.off(RegisterScreen(
+
+
+    ), fullscreenDialog: true);
   }
 
   _showSnackBar({String message}) {

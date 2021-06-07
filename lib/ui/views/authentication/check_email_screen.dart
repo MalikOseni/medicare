@@ -8,10 +8,14 @@ import 'package:medicare/utils/constant_string.dart';
 class CheckEmailScreen extends StatelessWidget {
 
   final String  email;
- final String message = "Medical ID has been sent to your  Email to Login to your new Account.";
+  String message;
 
 
-  CheckEmailScreen({this.email});
+  CheckEmailScreen({this.email, this.message}) {
+   if(message == null){
+     message = "Mail verification link has been sent to your email.";
+   }
+  }
 
   @override
   Widget build(BuildContext context) {
