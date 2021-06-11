@@ -25,7 +25,7 @@ class CloudFunctionServiceReal implements CloudFunctionService {
     //     .useFunctionsEmulator(origin: "http://10.0.2.2:5001");
 
     HttpsCallable callable =
-    CloudFunctions.instance.getHttpsCallable(functionName: name);
+    FirebaseFunctions.instance.httpsCallable( name);
 
     var result;
 

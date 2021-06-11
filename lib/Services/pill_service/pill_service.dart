@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:medicare/Services/auth_service/auth_service.dart';
 import 'package:medicare/datamodel/appointment_history.dart';
 import 'package:medicare/datamodel/notification_data.dart';
@@ -91,6 +92,15 @@ class PillDataServiceReal extends PillDataService {
 
     pillData.documentId = id;
 
+
+
+
+    FirebaseMessaging messaging =  FirebaseMessaging();
+
+
+   await messaging.subscribeToTopic(getTopic(pillData.intake));
+
+
     await firestore.collection("users").doc(_authService.currentUserId()).collection("pills-reminder").doc(id).set(pillData.toMap());
 
 
@@ -107,5 +117,21 @@ class PillDataServiceReal extends PillDataService {
     await firestore.collection("users").doc(_authService.currentUserId()).collection("pills-reminder").doc(documentId).delete();
 
     return 1;
+  }
+
+  String getTopic(String intake) {
+
+
+    if(intake == "1"){
+      return "once";
+    }
+
+    if(intake == "2"){
+      return "twice";
+    }
+
+      return "thrice";
+
+
   }
 }

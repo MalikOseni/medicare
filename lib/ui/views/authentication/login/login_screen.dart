@@ -162,6 +162,16 @@ class LoginScreen extends StatelessWidget {
                             "Forgot Password",
                             style: TextStyle(color: Color(0xff6EEB67)),
                           )),
+
+                      SizedBox(
+                        height: 15.h,
+                      ),
+                      TextButton(
+                          onPressed: model.goToSignUp,
+                          child: Text(
+                            "Register",
+                            style: TextStyle(color: Color(0xff6EEB67)),
+                          )),
                       SizedBox(
                         height: 50.h,
                       ),

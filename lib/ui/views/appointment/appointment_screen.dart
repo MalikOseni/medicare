@@ -167,7 +167,7 @@ class AppointmentScreen extends StatelessWidget {
                                 hintStyle: TextStyle(
                                     color: Theme.of(context).primaryColorLight,
                                     fontSize: 13),
-                                hintText: "Enter your email address"),
+                                hintText: "Enter your complaint"),
                             style: TextStyle(
                                 color: Theme.of(context).textTheme.bodyText1.color,
                                 fontSize: 13),

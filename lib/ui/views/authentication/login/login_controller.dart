@@ -129,4 +129,6 @@ class LoginController extends GetxController {
     hidePassword = !hidePassword;
     update();
   }
+
+
 }

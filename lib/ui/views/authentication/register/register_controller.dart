@@ -140,7 +140,7 @@ class RegisterController extends GetxController {
   }
 
   void registerClicked() async {
-    if (!formatData()) return;
+   // if (!formatData()) return;
 
     emailFocus.unfocus();
     passwordFocus.unfocus();

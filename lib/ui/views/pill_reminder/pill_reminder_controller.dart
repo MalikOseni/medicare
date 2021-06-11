@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:jiffy/jiffy.dart';
@@ -59,11 +60,9 @@ class PillReminderScreenController extends GetxController {
     _subscription = _notificationService.listenForPillData().listen((event) {
       notificationList = event ?? [];
 
-
-      if(notificationList.isEmpty){
+      if (notificationList.isEmpty) {
         updateBoolValue(true);
       }
-
 
       update();
     });
@@ -89,17 +88,67 @@ class PillReminderScreenController extends GetxController {
     update();
   }
 
-  void deleteReminder(int i) async {
+  String getTopic(String intake) {
+    if (intake == "1") {
+      return "once";
+    }
 
-    String documentId = notificationList[i].documentId;
+    if (intake == "2") {
+      return "twice";
+    }
+
+    return "thrice";
+  }
+
+  void deleteReminder(int i) async {
+    PillData pillData = notificationList[i];
+
 
 
     notificationList.removeAt(i);
 
+    if (pillData.intake == "1") {
+
+
+      PillData pillData = notificationList
+          .firstWhere((element) => element.intake == "1", orElse: (){
+            return null;
+      });
+
+
+      if(pillData == null){
+        await FirebaseMessaging().unsubscribeFromTopic("once");
+      }
+
+
+
+    } else if (pillData.intake == "2") {
+
+      PillData pillData = notificationList
+          .firstWhere((element) => element.intake == "2", orElse: null);
+
+
+      if(pillData == null){
+        await FirebaseMessaging().unsubscribeFromTopic("twice");
+      }
+
+
+    } else {
+      PillData pillData = notificationList
+          .firstWhere((element) => element.intake == "3", orElse: null);
+
+
+      if(pillData == null){
+        await FirebaseMessaging().unsubscribeFromTopic("thrice");
+      }
+
+    }
+
+
     update();
 
-    await _notificationService.deleteNotification(documentId : documentId);
-
+    await _notificationService.deleteNotification(
+        documentId: pillData.documentId);
   }
 
   void addDrugClicked() {
@@ -154,17 +203,17 @@ class PillReminderScreenController extends GetxController {
     PillData pillData =
         PillData(name: drugName, intake: getIntakeTitle(intake: intake));
 
+    _notificationService.addDrug(pillData: pillData);
 
+    addDrugInterface = false;
 
-     _notificationService.addDrug(pillData: pillData);
+    update();
 
-     addDrugInterface = false;
+    await Future.delayed(Duration(milliseconds: 250));
 
-     update();
+    editingController.clear();
 
-     await Future.delayed(Duration(milliseconds: 250));
-
-     showInfoSnackBar(message: "Pill Reminder updated");
+    showInfoSnackBar(message: "Pill Reminder updated");
 
     updateBoolValue(true);
   }
