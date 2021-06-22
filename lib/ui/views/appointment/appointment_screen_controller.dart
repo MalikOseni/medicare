@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:jiffy/jiffy.dart';
 import 'package:medicare/Services/appointment_service/appointment_service.dart';
 import 'package:medicare/datamodel/appointment_history.dart';
 import 'package:medicare/ui/shared/info_snackbar.dart';
@@ -18,7 +19,7 @@ class AppointmentScreenController extends GetxController {
 
   ScheduleTime scheduleTime = ScheduleTime.eleven05;
 
-  bool submittedAppointment =  false;
+  bool submittedAppointment = false;
 
   void closeDrawer() {
     try {
@@ -28,31 +29,19 @@ class AppointmentScreenController extends GetxController {
     } catch (e) {}
   }
 
-
   void nextClicked() {
-
-    if(submittedAppointment == true){
-
+    if (submittedAppointment == true) {
       closeDrawer();
 
       return;
     }
 
     if (showAppointTime == true) {
-
-
-
-      submittedAppointment =  true;
-
-
-
-
+      submittedAppointment = true;
 
       update();
 
-
       _appointmentService.bookAppointment();
-
 
       return;
     }
@@ -70,41 +59,45 @@ class AppointmentScreenController extends GetxController {
   }
 
   String getTitle(ScheduleTime e) {
+    var jiffy = Jiffy();
+
     switch (e) {
       case ScheduleTime.eleven05:
-        return "11:05 Am";
+        jiffy.add(minutes: 5);
+        break;
+
       case ScheduleTime.eleven10:
-        return "11:10 Am";
+        jiffy.add(minutes: 10);
+        break;
       case ScheduleTime.eleven15:
-        return "11:15 Am";
+        jiffy.add(minutes: 15);
+        break;
       case ScheduleTime.eleven20:
-        return "11:20 Am";
+        jiffy.add(minutes: 20);
+        break;
       case ScheduleTime.eleven25:
-        return "11:25 Am";
+        jiffy.add(minutes: 25);
+        break;
       case ScheduleTime.eleven30:
-        return "11:30 Am";
+        jiffy.add(minutes: 30);
+        break;
     }
 
-    return "12:00 Pm";
+    String time = jiffy.jm;
+
+    return time;
   }
 
   void selectTime(ScheduleTime e) {
-
     scheduleTime = e;
 
     update();
-
   }
 
   String getButtonText() {
+    if (submittedAppointment) return "Go Home".toUpperCase();
 
-    if(submittedAppointment) return "Go Home".toUpperCase();
-
-
-
-  return  showAppointTime ? "Submit".toUpperCase() :
-    "next".toUpperCase();
-
+    return showAppointTime ? "Submit".toUpperCase() : "next".toUpperCase();
   }
 }
 
