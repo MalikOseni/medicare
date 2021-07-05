@@ -113,7 +113,13 @@ class NotificationScreen extends StatelessWidget {
               ]))),
 
 
-              SliverList(delegate: SliverChildBuilderDelegate(
+            model.notificationList.isEmpty ? SliverFillRemaining(
+              child: Center(child: Text("No Notifications Yet", style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 16
+              ),),),
+
+            ) :  SliverList(delegate: SliverChildBuilderDelegate(
 
                       (c, i){
 

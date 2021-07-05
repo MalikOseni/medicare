@@ -303,6 +303,43 @@ class PillReminderScreen extends StatelessWidget {
                               ],
                             ),
 
+
+                            SizedBox(
+                              height: 20,
+                            ),
+
+                            Visibility(
+                              visible: model.everyday != null && !model.everyday,
+                              child: Wrap(
+                                runSpacing: 25,
+                                spacing: 30,
+                                children: DayScheduleReminder.values.map((e) => InkWell(
+                                  onTap: (){
+                                    model.selectDay(e);
+                                  },
+                                  child: Container(
+                                    decoration: BoxDecoration(
+
+                                        borderRadius: BorderRadius.circular(5),
+                                        border: Border.all(color: Colors.grey)
+                                    ),
+                                    child: Padding(
+                                      padding: const EdgeInsets.only(
+                                        top: 8,
+                                        bottom: 8,
+                                        left: 16,
+                                        right: 16
+                                      ),
+                                      child: Text(model.getDayTitle(e), style: TextStyle(
+                                        color:model.daySchedule == e ? Colors.red : null,
+                                        fontWeight: FontWeight.bold
+                                      ),),
+                                    ),
+                                  ),
+                                )).toList(),
+                              ),
+                            ),
+
                             SizedBox(
                               height: 51,
                             ),

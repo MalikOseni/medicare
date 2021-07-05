@@ -18,7 +18,7 @@ var locator = GetIt.instance;
 void setupServices() {
   locator.registerLazySingleton<AuthService>(() => AuthServiceReal());
   locator.registerFactory<CloudFunctionService>(() => CloudFunctionServiceReal());
-  locator.registerFactory<NotificationService>(() => NotificationServiceFake());
+  locator.registerFactory<NotificationService>(() => NotificationServiceReal());
 
 
   locator.registerFactory<StudentDataService>(() => StudentDataServiceReal());

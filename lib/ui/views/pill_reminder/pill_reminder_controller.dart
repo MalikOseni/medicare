@@ -32,6 +32,8 @@ class PillReminderScreenController extends GetxController {
   Intake intake = Intake.once;
   DrugType drugType = DrugType.capsule;
 
+  DayScheduleReminder daySchedule =  DayScheduleReminder.sunday;
+
   @override
   void onInit() {
     fetchNotification();
@@ -101,6 +103,11 @@ class PillReminderScreenController extends GetxController {
   }
 
   void deleteReminder(int i) async {
+
+
+   // print("The notification lenght is ${notificationList.length} and index is ${i}");
+
+
     PillData pillData = notificationList[i];
 
 
@@ -125,7 +132,9 @@ class PillReminderScreenController extends GetxController {
     } else if (pillData.intake == "2") {
 
       PillData pillData = notificationList
-          .firstWhere((element) => element.intake == "2", orElse: null);
+          .firstWhere((element) => element.intake == "2", orElse: (){
+            return null;
+      });
 
 
       if(pillData == null){
@@ -135,7 +144,9 @@ class PillReminderScreenController extends GetxController {
 
     } else {
       PillData pillData = notificationList
-          .firstWhere((element) => element.intake == "3", orElse: null);
+          .firstWhere((element) => element.intake == "3", orElse: (){
+            return null;
+      });
 
 
       if(pillData == null){
@@ -217,8 +228,55 @@ class PillReminderScreenController extends GetxController {
 
     updateBoolValue(true);
   }
+
+  void selectDay(DayScheduleReminder e) {
+
+    daySchedule =  e;
+    update();
+
+  }
+
+  String getDayTitle(DayScheduleReminder e) {
+
+    switch(e){
+      case DayScheduleReminder.sunday:
+        return "S";
+
+      case DayScheduleReminder.monday:
+        return "M";
+
+      case DayScheduleReminder.tuesday:
+        return "T";
+
+      case DayScheduleReminder.wednesday:
+        return "W";
+
+      case DayScheduleReminder.thursday:
+        return "TH";
+
+      case DayScheduleReminder.friday:
+        return "F";
+
+      case DayScheduleReminder.saturday:
+        return "S";
+    }
+
+    return "S";
+
+  }
 }
 
 enum DrugType { capsule, tablet }
 
 enum Intake { once, twice, thrice }
+
+enum DayScheduleReminder {
+  sunday,
+  monday,
+  tuesday,
+  wednesday,
+  thursday,
+  friday,
+  saturday,
+
+}

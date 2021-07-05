@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:get/get.dart';
 import 'package:medicare/Services/auth_service/auth_service.dart';
 import 'package:medicare/Services/student_data_service/student_data_service.dart';
@@ -33,6 +34,9 @@ class HomeScreenController extends GetxController {
     Get.back();
 
     await Future.delayed(Duration(milliseconds: 500));
+
+
+    await FirebaseMessaging().subscribeToTopic("create");
 
     if (option == HomeMenu.signOut) {
       try {
