@@ -16,7 +16,7 @@ abstract class PillDataService {
   Future<void> addDrug({PillData pillData });
 
 
-  Future<void> deleteNotification ({String documentId });
+  Future<void> deleteNotification ({String documentId, bool hasReminder });
 
 }
 
@@ -49,7 +49,7 @@ class PillDataServiceFake extends PillDataService {
   }
 
   @override
-  Future<void> deleteNotification({String documentId}) async {
+  Future<void> deleteNotification({String documentId, bool hasReminder}) async {
 
 
     await Future.delayed(Duration(milliseconds: 250));
@@ -101,6 +101,12 @@ class PillDataServiceReal extends PillDataService {
    await messaging.subscribeToTopic(getTopic(pillData.intake));
 
 
+
+    await firestore.collection("users").doc(_authService.currentUserId()).update({
+      "hasReminder" : true,
+    });
+
+
     await firestore.collection("users").doc(_authService.currentUserId()).collection("pills-reminder").doc(id).set(pillData.toMap());
 
 
@@ -110,8 +116,12 @@ class PillDataServiceReal extends PillDataService {
 
 
   @override
-  Future<void> deleteNotification({  String documentId}) async {
+  Future<void> deleteNotification({  String documentId, bool hasReminder}) async {
 
+
+    await firestore.collection("users").doc(_authService.currentUserId()).update({
+      "hasReminder" : hasReminder,
+    });
 
 
     await firestore.collection("users").doc(_authService.currentUserId()).collection("pills-reminder").doc(documentId).delete();

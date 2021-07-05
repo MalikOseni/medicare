@@ -159,7 +159,7 @@ class PillReminderScreenController extends GetxController {
     update();
 
     await _notificationService.deleteNotification(
-        documentId: pillData.documentId);
+        documentId: pillData.documentId, hasReminder : notificationList.isNotEmpty);
   }
 
   void addDrugClicked() {
