@@ -24,17 +24,17 @@ void main() async {
 
 
 
-  FirebaseFunctions.instance
-      .useFunctionsEmulator(origin: "http://10.0.2.2:5001");
+  // FirebaseFunctions.instance
+  //     .useFunctionsEmulator(origin: "http://10.0.2.2:5001");
+  //
+  //
+  // String host = defaultTargetPlatform == TargetPlatform.android
+  //     ? '10.0.2.2:8080'
+  //     : 'localhost:8080';
 
 
-  String host = defaultTargetPlatform == TargetPlatform.android
-      ? '10.0.2.2:8080'
-      : 'localhost:8080';
-
-
-  FirebaseFirestore.instance.settings =
-      Settings(host: host, sslEnabled: false);
+  // FirebaseFirestore.instance.settings =
+  //     Settings(host: host, sslEnabled: false);
 
   initializeNotifications();
 
